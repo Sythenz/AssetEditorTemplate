@@ -1,0 +1,29 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "AssetEditorTemplate",
+	"Description": "An Asset Editor template, along with an asset factory. Creates a view with a 3D Viewport and details panel for customizing an asset.",
+	"Category": "Other",
+	"CreatedBy": "Alessa Baker & Epic Games",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "AssetEditorTemplate",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		},
+		{
+			"Name": "AssetEditorTemplateEditor",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
+		}
+	]
+}
