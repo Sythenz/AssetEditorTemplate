@@ -3,43 +3,31 @@
 
 #include "SimpleAssetViewportClient.h"
 
-FSimpleAssetViewportClient::FSimpleAssetViewportClient(int32 InTabIndex)
-	: FEditorViewportClient(nullptr, nullptr, nullptr)
+FSimpleAssetViewportClient::FSimpleAssetViewportClient(const TSharedRef<SEditorViewport>& InThumbnailViewport,
+	const TSharedRef<FAdvancedPreviewScene>& InPreviewScene)
+	: FEditorViewportClient(nullptr, &InPreviewScene.Get(), StaticCastSharedRef<SEditorViewport>(InThumbnailViewport))
+	, ViewportPtr(InThumbnailViewport)
 {
+	AdvancedPreviewScene = static_cast<FAdvancedPreviewScene*>(PreviewScene);
+
+	SetRealtime(true);
+
+	// Hide grid, we don't need this.
+	DrawHelper.bDrawGrid = false;
+	DrawHelper.bDrawPivot = false;
+	DrawHelper.AxesLineThickness = 5;
+	DrawHelper.PivotSize = 5;
+
+	//Initiate view
+	SetViewLocation(FVector(75, 75, 75));
+	SetViewRotation(FVector(-75, -75, -75).Rotation());
+
+	EngineShowFlags.SetScreenPercentage(true);
+
+	// Set the Default type to Ortho and the XZ Plane
+	ELevelViewportType NewViewportType = LVT_Perspective;
+	SetViewportType(NewViewportType);
+
+	// View Modes in Persp and Ortho
 	SetViewModes(VMI_Lit, VMI_Lit);
-	
-	MyBGColor = FLinearColor::Black;
-
-	SetRealtime(false);
-
-	PreviewScene = &OwnedPreviewScene;
-
-	EngineShowFlags.Selection = true;
-	EngineShowFlags.SelectionOutline = true;
-	EngineShowFlags.Grid = false;
-}
-
-bool FSimpleAssetViewportClient::InputKey(const FInputKeyEventArgs& InEventArgs)
-{
-	return FEditorViewportClient::InputKey(InEventArgs);
-}
-
-FLinearColor FSimpleAssetViewportClient::GetBackgroundColor() const
-{
-	return FEditorViewportClient::GetBackgroundColor();
-}
-
-void FSimpleAssetViewportClient::ResetCameraView()
-{
-	UWorld* World = OwnedPreviewScene.GetWorld();
-
-	if (World->EditorViews.IsValidIndex(GetViewportType()))
-	{
-		FLevelViewportInfo& ViewportInfo = World->EditorViews[GetViewportType()];
-		SetInitialViewTransform(
-			GetViewportType(),
-			ViewportInfo.CamPosition,
-			ViewportInfo.CamRotation,
-			ViewportInfo.CamOrthoZoom);
-	}
 }

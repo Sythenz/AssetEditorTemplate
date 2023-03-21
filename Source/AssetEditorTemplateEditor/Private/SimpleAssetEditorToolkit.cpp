@@ -35,13 +35,9 @@ void FSimpleAssetEditorToolkit::InitAssetEditor(const EToolkitMode::Type Mode, c
 	}
 	
 	// Create viewport widget
-	FSimpleAssetViewportRequiredArgs PreviewArgs(
-		StaticCastSharedRef<FSimpleAssetEditorToolkit>(AsShared()),
-		PreviewScene.ToSharedRef());
+	PreviewWidget = SNew(SSimpleAssetViewport);
 	
-	PreviewWidget = SNew(SSimpleAssetViewport, PreviewArgs);
-	
-	const TSharedRef<FTabManager::FLayout> Layout = FTabManager::NewLayout("NormalDistributionEditorLayoutv1.0")
+	const TSharedRef<FTabManager::FLayout> Layout = FTabManager::NewLayout("SimpleAssetEditorLayoutv1.0")
 	->AddArea
 	(
 		FTabManager::NewPrimaryArea()->SetOrientation(Orient_Vertical)

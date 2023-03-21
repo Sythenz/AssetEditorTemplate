@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AdvancedPreviewScene.h"
 #include "SCommonEditorViewportToolbarBase.h"
 #include "SEditorViewport.h"
 
@@ -12,47 +13,48 @@ class FSimpleAssetEditorToolkit;
 
 struct FSimpleAssetViewportRequiredArgs
 {
-	FSimpleAssetViewportRequiredArgs(
-		const TSharedRef<FSimpleAssetEditorToolkit>& InAssetEditor,
-		const TSharedRef<FSimpleAssetPreviewScene>& InPreviewScene)
-		: AssetEditor(InAssetEditor)
-		, PreviewScene(InPreviewScene)
+	FSimpleAssetViewportRequiredArgs(const TSharedRef<class FSimpleAssetPreviewScene>& InPreviewScene, TSharedRef<class FAssetEditorToolkit> InAssetEditorToolkit, int32 InViewportIndex)
+	: PreviewScene(InPreviewScene)
+	, AssetEditorToolkit(InAssetEditorToolkit)
+	, ViewportIndex(InViewportIndex)
 	{
 	}
 
-	TSharedRef<FSimpleAssetEditorToolkit> AssetEditor;
 
-	TSharedRef<FSimpleAssetPreviewScene> PreviewScene;
+	TSharedRef<class FSimpleAssetPreviewScene> PreviewScene;
+	TSharedRef<class FAssetEditorToolkit> AssetEditorToolkit;
+	int32 ViewportIndex;
 };
 
 class FSimpleAssetViewportClient;
 /**
  * 
  */
-class SSimpleAssetViewport : public SEditorViewport, public ICommonEditorViewportToolbarInfoProvider
+class SSimpleAssetViewport : public SEditorViewport, public FGCObject, public ICommonEditorViewportToolbarInfoProvider
 {
 public:
+
 	SLATE_BEGIN_ARGS(SSimpleAssetViewport) {}
 	SLATE_END_ARGS()
 
-	virtual ~SSimpleAssetViewport() override;
-	
-	void Construct(const FArguments& InArgs, const FSimpleAssetViewportRequiredArgs& InRequiredArgs);
-	
-	// SEditorViewport interface
-	virtual TSharedPtr<SWidget> MakeViewportToolbar() override;
-	virtual TSharedRef<FEditorViewportClient> MakeEditorViewportClient() override;
-	virtual void BindCommands() override;
-	virtual void OnFocusViewportToSelection() override;
-	// End of SEditorViewport interface
+	/** The scene for this viewport. */
+	TSharedPtr<FAdvancedPreviewScene> PreviewScene;
 
-	// ICommonEditorViewportToolbarInfoProvider interface
-	virtual TSharedRef<SEditorViewport> GetViewportWidget() override;
+	void Construct(const FArguments& InArgs);
+
+	SSimpleAssetViewport();
+	~SSimpleAssetViewport();
+
+	void AddReferencedObjects(FReferenceCollector& Collector) override;
+	virtual TSharedRef<class SEditorViewport> GetViewportWidget() override;
 	virtual TSharedPtr<FExtender> GetExtenders() const override;
 	virtual void OnFloatingButtonClicked() override;
-	// End of ICommonEditorViewportToolbarInfoProvider interface
+
+	virtual TSharedRef<FEditorViewportClient> MakeEditorViewportClient() override;
+
+	TSharedPtr<class FSimpleAssetViewportClient> GetViewportClient() { return TypedViewportClient; };
 	
-	TSharedPtr<FSimpleAssetViewportClient> TypedViewportClient;
-	int32 TabIndex;
+	//Shared ptr to the client
+	TSharedPtr<class FSimpleAssetViewportClient> TypedViewportClient;
 	
 };

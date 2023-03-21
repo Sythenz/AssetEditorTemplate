@@ -3,40 +3,28 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AdvancedPreviewScene.h"
 #include "Widgets/DeclarativeSyntaxSupport.h"
 #include "EditorViewportClient.h"
 #include "SEditorViewport.h"
 #include "Editor/UnrealEd/Public/SCommonEditorViewportToolbarBase.h"
 
+class FSimpleAssetPreviewScene;
+class FSimpleAssetEditorToolkit;
+class SSimpleAssetViewport;
 /**
  * 
  */
 class FSimpleAssetViewportClient : public FEditorViewportClient
 {
 public:
-	FSimpleAssetViewportClient(int32 InTabIndex);
-	
-	// FViewportClient interface
-	virtual bool InputKey(const FInputKeyEventArgs& InEventArgs) override;
-	// End of FViewportClient interface
 
-	// FEditorViewportClient interface
-	virtual FLinearColor GetBackgroundColor() const override;
-	// End of FEditorViewportClient interface
-	
-	void SetOwnerWidget(const TWeakPtr<SEditorViewport> OwnerPtr)
-	{
-		EditorViewportWidget = OwnerPtr;
-	}
+	/** Pointer back to the Editor Viewport */
+	TWeakPtr<class SEditorViewport> ViewportPtr;
 
-	void ResetCameraView();
-	
-private:
-	int32 TabIndex;
+	//Constructor and destructor
+	FSimpleAssetViewportClient(const TSharedRef<SEditorViewport>& InThumbnailViewport, const TSharedRef<FAdvancedPreviewScene>& InPreviewScene);
 
-	// The preview scene
-	FPreviewScene OwnedPreviewScene;
-
-	FAssetData SourceWorldAsset;
-	FLinearColor MyBGColor;
+	/** Stored pointer to the preview scene in which the static mesh is shown */
+	FAdvancedPreviewScene* AdvancedPreviewScene;
 };

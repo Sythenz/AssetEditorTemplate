@@ -4,52 +4,49 @@
 #include "SimpleAssetViewport.h"
 
 #include "SimpleAsset.h"
+#include "SimpleAssetPreviewScene.h"
 #include "SimpleAssetViewportClient.h"
+#include "CompGeom/DiTOrientedBox.h"
+
+//Just create the advnaced preview scene and initiate components
+SSimpleAssetViewport::SSimpleAssetViewport() : PreviewScene(MakeShareable(new FAdvancedPreviewScene(FPreviewScene::ConstructionValues())))
+{
+
+}
 
 SSimpleAssetViewport::~SSimpleAssetViewport()
 {
-	TypedViewportClient = nullptr;
+	if (TypedViewportClient.IsValid())
+	{
+		TypedViewportClient->Viewport = nullptr;
+	}
 }
 
-void SSimpleAssetViewport::Construct(const FArguments& InArgs, const FSimpleAssetViewportRequiredArgs& InRequiredArgs)
+void SSimpleAssetViewport::AddReferencedObjects(FReferenceCollector& Collector)
 {
-	TypedViewportClient = MakeShareable(new FSimpleAssetViewportClient(TabIndex));
-	SEditorViewport::Construct(SEditorViewport::FArguments());
-}
 
-TSharedPtr<SWidget> SSimpleAssetViewport::MakeViewportToolbar()
-{
-	return SEditorViewport::MakeViewportToolbar();
 }
-
-TSharedRef<FEditorViewportClient> SSimpleAssetViewport::MakeEditorViewportClient()
-{
-	return TypedViewportClient.ToSharedRef();
-}
-
-void SSimpleAssetViewport::BindCommands()
-{
-	SEditorViewport::BindCommands();
-	TSharedRef<FSimpleAssetViewportClient> EditorViewportClientRef = TypedViewportClient.ToSharedRef();
-	
-}
-
-void SSimpleAssetViewport::OnFocusViewportToSelection()
-{
-	SEditorViewport::OnFocusViewportToSelection();
-}
-
-TSharedRef<SEditorViewport> SSimpleAssetViewport::GetViewportWidget()
+TSharedRef<class SEditorViewport> SSimpleAssetViewport::GetViewportWidget()
 {
 	return SharedThis(this);
 }
-
 TSharedPtr<FExtender> SSimpleAssetViewport::GetExtenders() const
 {
 	TSharedPtr<FExtender> Result(MakeShareable(new FExtender));
 	return Result;
 }
-
 void SSimpleAssetViewport::OnFloatingButtonClicked()
 {
+	// Nothing
+}
+
+void SSimpleAssetViewport::Construct(const FArguments& InArgs)
+{
+	SEditorViewport::Construct(SEditorViewport::FArguments());
+}
+
+TSharedRef<FEditorViewportClient> SSimpleAssetViewport::MakeEditorViewportClient()
+{
+	TypedViewportClient = MakeShareable(new FSimpleAssetViewportClient(SharedThis(this), PreviewScene.ToSharedRef()));
+	return TypedViewportClient.ToSharedRef();
 }
