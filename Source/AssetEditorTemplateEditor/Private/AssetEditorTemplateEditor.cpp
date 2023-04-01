@@ -2,7 +2,7 @@
 
 #include "AssetEditorTemplateEditor.h"
 
-#include "SimpleAssetTypeActions.h"
+#include "AssetTypeActions/SimpleAssetTypeActions.h"
 #define LOCTEXT_NAMESPACE "FAssetEditorTemplateModule"
 
 void FAssetEditorTemplateEditorModule::StartupModule()

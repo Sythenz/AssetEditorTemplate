@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SimpleAssetEditorToolkit.h"
+#include "AssetEditor/SimpleAssetEditorToolkit.h"
 
 #include "SimpleAsset.h"
-#include "SimpleAssetPreviewScene.h"
-#include "SimpleAssetViewport.h"
+#include "AssetEditor/SimpleAssetPreviewScene.h"
+#include "AssetEditor/SimpleAssetViewport.h"
 
 #define LOCTEXT_NAMESPACE "SimpleAssetEditor"
 

@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SimpleAssetTypeActions.h"
+#include "AssetTypeActions/SimpleAssetTypeActions.h"
+#include "AssetEditor/SimpleAssetEditorToolkit.h"
 #include "SimpleAsset.h"
-#include "SimpleAssetEditorToolkit.h"
 
 UClass* FSimpleAssetTypeActions::GetSupportedClass() const
 {

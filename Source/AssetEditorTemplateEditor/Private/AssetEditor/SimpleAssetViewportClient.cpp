@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SimpleAssetViewportClient.h"
+#include "AssetEditor/SimpleAssetViewportClient.h"
 
 FSimpleAssetViewportClient::FSimpleAssetViewportClient(const TSharedRef<SEditorViewport>& InThumbnailViewport,
 	const TSharedRef<FAdvancedPreviewScene>& InPreviewScene)

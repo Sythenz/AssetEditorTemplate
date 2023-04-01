@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SimpleAssetViewport.h"
+#include "AssetEditor/SimpleAssetViewport.h"
 
 #include "SimpleAsset.h"
-#include "SimpleAssetPreviewScene.h"
-#include "SimpleAssetViewportClient.h"
+#include "AssetEditor/SimpleAssetPreviewScene.h"
+#include "AssetEditor/SimpleAssetViewportClient.h"
 #include "CompGeom/DiTOrientedBox.h"
 
 //Just create the advnaced preview scene and initiate components
