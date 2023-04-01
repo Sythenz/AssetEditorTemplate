@@ -11,6 +11,8 @@ void FAssetEditorTemplateEditorModule::StartupModule()
 	
 	SimpleAssetTypeActions = MakeShared<FSimpleAssetTypeActions>();
 	FAssetToolsModule::GetModule().Get().RegisterAssetTypeActions(SimpleAssetTypeActions.ToSharedRef());
+
+	ToolbarExtensibilityManager = MakeShareable(new FExtensibilityManager);
 }
 
 void FAssetEditorTemplateEditorModule::ShutdownModule()

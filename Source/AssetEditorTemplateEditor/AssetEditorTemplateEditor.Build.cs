@@ -41,7 +41,8 @@ public class AssetEditorTemplateEditor : ModuleRules
 				"SlateCore",
 				"AssetEditorTemplate",
 				"UnrealEd",
-				"AdvancedPreviewScene"
+				"AdvancedPreviewScene",
+				"InputCore"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

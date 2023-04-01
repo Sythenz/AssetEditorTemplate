@@ -4,6 +4,8 @@
 #include "AssetEditor/SimpleAssetViewport.h"
 
 #include "SimpleAsset.h"
+#include "UnrealEdGlobals.h"
+#include "Editor/UnrealEdEngine.h"
 #include "AssetEditor/SimpleAssetPreviewScene.h"
 #include "AssetEditor/SimpleAssetViewportClient.h"
 #include "CompGeom/DiTOrientedBox.h"
@@ -22,10 +24,6 @@ SSimpleAssetViewport::~SSimpleAssetViewport()
 	}
 }
 
-void SSimpleAssetViewport::AddReferencedObjects(FReferenceCollector& Collector)
-{
-
-}
 TSharedRef<class SEditorViewport> SSimpleAssetViewport::GetViewportWidget()
 {
 	return SharedThis(this);
@@ -40,6 +38,15 @@ void SSimpleAssetViewport::OnFloatingButtonClicked()
 	// Nothing
 }
 
+void SSimpleAssetViewport::OnFocusViewportToSelection()
+{
+	SEditorViewport::OnFocusViewportToSelection();
+	
+	/* TODO: Replace with PreviewMeshComponent->Bounds */
+	const FBoxSphereBounds Bounds = FBoxSphereBounds();
+	TypedViewportClient->FocusViewportOnBounds( Bounds, false );
+}
+
 void SSimpleAssetViewport::Construct(const FArguments& InArgs)
 {
 	SEditorViewport::Construct(SEditorViewport::FArguments());
@@ -50,3 +57,4 @@ TSharedRef<FEditorViewportClient> SSimpleAssetViewport::MakeEditorViewportClient
 	TypedViewportClient = MakeShareable(new FSimpleAssetViewportClient(SharedThis(this), PreviewScene.ToSharedRef()));
 	return TypedViewportClient.ToSharedRef();
 }
+

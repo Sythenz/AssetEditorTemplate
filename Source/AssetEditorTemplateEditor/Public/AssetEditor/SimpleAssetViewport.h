@@ -43,12 +43,15 @@ public:
 	void Construct(const FArguments& InArgs);
 
 	SSimpleAssetViewport();
-	~SSimpleAssetViewport();
+	virtual ~SSimpleAssetViewport() override;
 
-	void AddReferencedObjects(FReferenceCollector& Collector) override;
+	virtual void AddReferencedObjects(FReferenceCollector& Collector) override {}
+
 	virtual TSharedRef<class SEditorViewport> GetViewportWidget() override;
 	virtual TSharedPtr<FExtender> GetExtenders() const override;
 	virtual void OnFloatingButtonClicked() override;
+	
+	virtual void OnFocusViewportToSelection() override;
 
 	virtual TSharedRef<FEditorViewportClient> MakeEditorViewportClient() override;
 

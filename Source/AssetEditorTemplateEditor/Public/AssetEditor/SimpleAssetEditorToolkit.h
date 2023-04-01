@@ -16,27 +16,35 @@ class USimpleAsset;
 class FSimpleAssetEditorToolkit : public FAssetEditorToolkit, public FNotifyHook
 {
 public:
- FSimpleAssetEditorToolkit();
- virtual ~FSimpleAssetEditorToolkit() override;
+	FSimpleAssetEditorToolkit();
+	virtual ~FSimpleAssetEditorToolkit() override;
 
- void InitAssetEditor(
-  const EToolkitMode::Type Mode,
-  const TSharedPtr<IToolkitHost>& InitToolkitHost,
-  USimpleAsset* InSimpleAsset);
+	void InitAssetEditor(
+		const EToolkitMode::Type Mode,
+		const TSharedPtr<IToolkitHost>& InitToolkitHost,
+		USimpleAsset* InSimpleAsset);
 
- virtual void RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager) override;
- virtual void UnregisterTabSpawners(const TSharedRef<FTabManager>& InTabManager) override;
+	/* Simple Asset Editor methods */
+	void BindCommands();
+	void ExtendToolbars();
+	void FocusViewport() const;
+	/* End Simple Asset Editor methods */
+	
+	virtual void RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager) override;
+	virtual void UnregisterTabSpawners(const TSharedRef<FTabManager>& InTabManager) override;
+	
+	/** IToolkit interface */
+	virtual FName GetToolkitFName() const override { return "SimpleAssetEditor"; };
+	virtual FText GetBaseToolkitName() const override { return INVTEXT("Simple Asset Editor"); };
+	virtual FString GetWorldCentricTabPrefix() const override { return "Simple Asset "; };
+	virtual FLinearColor GetWorldCentricTabColorScale() const override { return {}; };
+	/** End IToolkit interface */
+	
+	TSharedRef<SDockTab> SpawnTab_Viewport(const FSpawnTabArgs& Args) const;
 
- virtual FName GetToolkitFName() const override { return "SimpleAssetEditor"; };
- virtual FText GetBaseToolkitName() const override { return INVTEXT("Simple Asset Editor"); };
- virtual FString GetWorldCentricTabPrefix() const override { return "Simple Asset "; };
- virtual FLinearColor GetWorldCentricTabColorScale() const override { return {}; };
-
- TSharedRef<SDockTab> SpawnTab_Viewport(const FSpawnTabArgs& Args) const;
- 
 private:
- 
- USimpleAsset* SimpleAsset;
- TSharedPtr<FSimpleAssetPreviewScene> PreviewScene;
- TSharedPtr<SSimpleAssetViewport> PreviewWidget;
+
+	USimpleAsset* SimpleAsset;
+	TSharedPtr<FSimpleAssetPreviewScene> PreviewScene;
+	TSharedPtr<SSimpleAssetViewport> PreviewViewportWidget;
 };
