@@ -10,10 +10,11 @@
 #include "AssetEditor/SimpleAssetViewportClient.h"
 #include "CompGeom/DiTOrientedBox.h"
 
-//Just create the advnaced preview scene and initiate components
-SSimpleAssetViewport::SSimpleAssetViewport() : PreviewScene(MakeShareable(new FAdvancedPreviewScene(FPreviewScene::ConstructionValues())))
+void SSimpleAssetViewport::Construct(const FArguments& InArgs, TSharedPtr<FSimpleAssetEditorToolkit> InShowcaseAssetEditor, TSharedPtr<FSimpleAssetPreviewScene> InPreviewScene)
 {
-
+	EditorPtr = InShowcaseAssetEditor;
+	PreviewScene = InPreviewScene;
+	SEditorViewport::Construct(SEditorViewport::FArguments());
 }
 
 SSimpleAssetViewport::~SSimpleAssetViewport()
@@ -45,11 +46,6 @@ void SSimpleAssetViewport::OnFocusViewportToSelection()
 	/* TODO: Replace with PreviewMeshComponent->Bounds */
 	const FBoxSphereBounds Bounds = FBoxSphereBounds();
 	TypedViewportClient->FocusViewportOnBounds( Bounds, false );
-}
-
-void SSimpleAssetViewport::Construct(const FArguments& InArgs)
-{
-	SEditorViewport::Construct(SEditorViewport::FArguments());
 }
 
 TSharedRef<FEditorViewportClient> SSimpleAssetViewport::MakeEditorViewportClient()

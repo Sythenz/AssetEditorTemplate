@@ -38,11 +38,9 @@ public:
 	SLATE_END_ARGS()
 
 	/** The scene for this viewport. */
-	TSharedPtr<FAdvancedPreviewScene> PreviewScene;
+	TSharedPtr<FSimpleAssetPreviewScene> PreviewScene;
 
-	void Construct(const FArguments& InArgs);
-
-	SSimpleAssetViewport();
+	void Construct(const FArguments& InArgs, TSharedPtr<FSimpleAssetEditorToolkit> InShowcaseAssetEditor, TSharedPtr<FSimpleAssetPreviewScene> InPreviewScene);
 	virtual ~SSimpleAssetViewport() override;
 
 	virtual void AddReferencedObjects(FReferenceCollector& Collector) override {}
@@ -59,5 +57,8 @@ public:
 	
 	//Shared ptr to the client
 	TSharedPtr<class FSimpleAssetViewportClient> TypedViewportClient;
+
+	//Toolkit Pointer
+	TSharedPtr<FSimpleAssetEditorToolkit> EditorPtr;
 	
 };

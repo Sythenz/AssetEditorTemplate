@@ -27,20 +27,8 @@ void FSimpleAssetEditorToolkit::InitAssetEditor(const EToolkitMode::Type Mode, c
 	
 	SimpleAsset = Cast<USimpleAsset>(InSimpleAsset);
 	
-	// Create Preview Scene
-	if (!PreviewScene.IsValid())
-	{
-		PreviewScene = MakeShareable(
-			new FSimpleAssetPreviewScene(
-				FPreviewScene::ConstructionValues()
-				.AllowAudioPlayback(true)
-				.ShouldSimulatePhysics(true)
-				.ForceUseMovementComponentInNonGameWorld(true),
-				StaticCastSharedRef<FSimpleAssetEditorToolkit>(AsShared())));
-	}
-	
 	// Create viewport widget
-	PreviewViewportWidget = SNew(SSimpleAssetViewport);
+	PreviewViewportWidget = SNew(SSimpleAssetViewport, SharedThis(this), CreatePreviewScene());
 	
 	const TSharedRef<FTabManager::FLayout> Layout = FTabManager::NewLayout("SimpleAssetEditorLayoutv1.0")
 	->AddArea
@@ -76,6 +64,9 @@ void FSimpleAssetEditorToolkit::InitAssetEditor(const EToolkitMode::Type Mode, c
 	
 	//Add buttons to the Asset Editor
 	ExtendToolbars();
+
+	//Focus the viewport on preview bounds
+	FocusViewport();
 }
 
 void FSimpleAssetEditorToolkit::BindCommands()
@@ -86,6 +77,23 @@ void FSimpleAssetEditorToolkit::BindCommands()
 	
 	ToolkitCommands->MapAction(Commands.FocusViewport,
 	FExecuteAction::CreateSP(this, &FSimpleAssetEditorToolkit::FocusViewport));
+}
+
+TSharedPtr<FSimpleAssetPreviewScene> FSimpleAssetEditorToolkit::CreatePreviewScene()
+{
+	// Create Preview Scene
+	if (!PreviewScene.IsValid())
+	{
+		PreviewScene = MakeShareable(
+			new FSimpleAssetPreviewScene(
+				FPreviewScene::ConstructionValues()
+				.AllowAudioPlayback(true)
+				.ShouldSimulatePhysics(true)
+				.ForceUseMovementComponentInNonGameWorld(true),
+				StaticCastSharedRef<FSimpleAssetEditorToolkit>(AsShared())));
+	}
+
+	return PreviewScene;
 }
 
 void FSimpleAssetEditorToolkit::ExtendToolbars()

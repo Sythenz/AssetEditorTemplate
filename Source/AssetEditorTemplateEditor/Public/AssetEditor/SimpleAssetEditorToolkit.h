@@ -28,6 +28,7 @@ public:
 	void BindCommands();
 	void ExtendToolbars();
 	void FocusViewport() const;
+	TSharedPtr<FSimpleAssetPreviewScene> CreatePreviewScene();
 	/* End Simple Asset Editor methods */
 	
 	virtual void RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager) override;

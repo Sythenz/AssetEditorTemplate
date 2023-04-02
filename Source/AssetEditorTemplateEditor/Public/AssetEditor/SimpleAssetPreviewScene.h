@@ -22,6 +22,7 @@ public:
 		return EditorPtr.Pin().ToSharedRef();
 	}
 
+	UStaticMeshComponent* PreviewComponent = nullptr;
 private:
 	TWeakPtr<FSimpleAssetEditorToolkit> EditorPtr;
 };

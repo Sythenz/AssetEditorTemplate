@@ -30,11 +30,6 @@ FSimpleAssetViewportClient::FSimpleAssetViewportClient(const TSharedRef<SEditorV
 
 	// View Modes in Persp and Ortho
 	SetViewModes(VMI_Lit, VMI_Lit);
-}
-
-void FSimpleAssetViewportClient::Tick(float DeltaSeconds)
-{
-	FEditorViewportClient::Tick(DeltaSeconds);
 
 }
 
@@ -62,7 +57,7 @@ void FSimpleAssetViewportClient::FocusViewportOnBounds(const FBoxSphereBounds Bo
 	{
 		Radius *= AspectToUse;
 	}
-
+	
 	/**
 	* Now that we have a adjusted radius, we are taking half of the viewport's FOV,
 	* converting it to radians, and then figuring out the camera's distance from the center

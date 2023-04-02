@@ -25,8 +25,7 @@ public:
 
 	/* Constructor and destructor */
 	FSimpleAssetViewportClient(const TSharedRef<SEditorViewport>& InThumbnailViewport, const TSharedRef<FAdvancedPreviewScene>& InPreviewScene);
-	virtual void Tick(float DeltaSeconds) override;
-	
+
 	/* Shameless stolen from SMaterialEditorViewport because for some reason a basic Focus on Selection is not implemented in the ViewportClient base class. */
 	void FocusViewportOnBounds(const FBoxSphereBounds Bounds, bool bInstant /*= false*/);
 
