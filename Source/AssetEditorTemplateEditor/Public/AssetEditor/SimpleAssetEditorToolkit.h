@@ -48,4 +48,7 @@ private:
 	USimpleAsset* SimpleAsset;
 	TSharedPtr<FSimpleAssetPreviewScene> PreviewScene;
 	TSharedPtr<SSimpleAssetViewport> PreviewViewportWidget;
+protected:
+	void OnClose() override;
+
 };

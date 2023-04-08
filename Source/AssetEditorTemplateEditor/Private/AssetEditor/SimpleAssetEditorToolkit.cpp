@@ -196,4 +196,17 @@ TSharedRef<SDockTab> FSimpleAssetEditorToolkit::SpawnTab_Viewport(const FSpawnTa
 	return SpawnedTab;
 }
 
+
+void FSimpleAssetEditorToolkit::OnClose()
+{
+	SimpleAsset = nullptr;
+
+	// We're no longer editing this object, so let the editor know
+	if (GEditor)
+	{
+		GEditor->GetEditorSubsystem<UAssetEditorSubsystem>()->NotifyEditorClosed(this);
+	}
+
+}
+
 #undef LOCTEXT_NAMESPACE
