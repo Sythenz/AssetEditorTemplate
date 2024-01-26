@@ -10,4 +10,7 @@ this is the basics:
 
 ![alt text](UnrealEngine_AssetEditorArchitecture.png?raw=true)
 
+If you're interested in more discussion and in-depth help on this topic, check out the Codekitten
+Discord: [Join Codekitten Server](https://discord.gg/82xPvhDSxh)
+
 Alessa ❤️
