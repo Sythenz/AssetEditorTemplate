@@ -201,12 +201,15 @@ void FSimpleAssetEditorToolkit::OnClose()
 {
 	SimpleAsset = nullptr;
 
-	// We're no longer editing this object, so let the editor know
-	if (GEditor)
+	if(PreviewScene.IsValid())
 	{
-		GEditor->GetEditorSubsystem<UAssetEditorSubsystem>()->NotifyEditorClosed(this);
+		PreviewScene.Reset();
 	}
-
+		
+	if(PreviewViewportWidget.IsValid())
+	{
+		PreviewViewportWidget.Reset();
+	}
 }
 
 #undef LOCTEXT_NAMESPACE
