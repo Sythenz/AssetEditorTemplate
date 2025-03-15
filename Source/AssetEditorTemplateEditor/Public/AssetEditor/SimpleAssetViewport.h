@@ -45,6 +45,7 @@ public:
 
 	virtual void AddReferencedObjects(FReferenceCollector& Collector) override {}
 
+	virtual FString GetReferencerName() const override;
 	virtual TSharedRef<class SEditorViewport> GetViewportWidget() override;
 	virtual TSharedPtr<FExtender> GetExtenders() const override;
 	virtual void OnFloatingButtonClicked() override;

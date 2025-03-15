@@ -25,6 +25,12 @@ SSimpleAssetViewport::~SSimpleAssetViewport()
 	}
 }
 
+FString SSimpleAssetViewport::GetReferencerName() const
+{
+	return TEXT("SSimpleAssetViewport");
+
+}
+
 TSharedRef<class SEditorViewport> SSimpleAssetViewport::GetViewportWidget()
 {
 	return SharedThis(this);
